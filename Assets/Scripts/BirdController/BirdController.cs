@@ -28,7 +28,6 @@ public class BirdController : MonoBehaviour
     private float verticalVelocity = 0f;
 
     public bool hasScored;
-    int i = 0;
 
     // Start is called before the first frame update
     void Awake()
@@ -200,23 +199,24 @@ public class BirdController : MonoBehaviour
         foreach (GameObject pipe in pipes)
         {
             //Debug.Log("pipe"+":"+i);
-            Vector2 birdSize = gameObject.GetComponent<SpriteRenderer>().bounds.size;
-            Vector2 pipeSize = pipe.GetComponent<SpriteRenderer>().bounds.size;
-
+            //Vector2 birdSize = gameObject.GetComponent<SpriteRenderer>().bounds.size;
+            //Vector2 pipeSize = pipe.GetComponent<SpriteRenderer>().bounds.size;
+            Renderer birdRenderer = gameObject.GetComponent<Renderer>();
+            Renderer pipeRenderer = pipe.GetComponent<Renderer>();
             // Lấy vị trí của bird và pipe
-            Vector3 birdPos = transform.position;
-            Vector3 pipePos = pipe.transform.position;
+            /*Vector3 birdPos = transform.position;
+            Vector3 pipePos = pipe.transform.position;*/
 
             // Tính các giá trị tọa độ của hộp giới hạn xung quanh bird và pipe
-            float birdMinX = birdPos.x - birdSize.x / 2;
-            float birdMaxX = birdPos.x + birdSize.x / 2;
-            float birdMinY = birdPos.y - birdSize.y / 2;
-            float birdMaxY = birdPos.y + birdSize.y / 2;
+            float birdMinX = birdRenderer.bounds.min.x;
+            float birdMaxX = birdRenderer.bounds.max.x;
+            float birdMinY = birdRenderer.bounds.min.y;
+            float birdMaxY = birdRenderer.bounds.max.y;
 
-            float pipeMinX = pipePos.x - pipeSize.x / 2;
-            float pipeMaxX = pipePos.x + pipeSize.x / 2;
-            float pipeMinY = pipePos.y - pipeSize.y / 2;
-            float pipeMaxY = pipePos.y + pipeSize.y / 2;
+            float pipeMinX = pipeRenderer.bounds.min.x;
+            float pipeMaxX = pipeRenderer.bounds.max.x;
+            float pipeMinY = pipeRenderer.bounds.min.y;
+            float pipeMaxY = pipeRenderer.bounds.max.y;
 
             // Kiểm tra xem hai hộp giới hạn có giao nhau hay không
             if (birdMinX <= pipeMaxX && birdMaxX >= pipeMinX &&
