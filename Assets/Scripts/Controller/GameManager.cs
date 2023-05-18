@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
     private const string HIGH_SCORE = "High Score";
+    private const string Bird = "Chose Bird";
     void Awake()
     {
-        _MakeSingleInstance();
+        makeSingleInstance();
         IsGameStartedForTheFirstTime();
     }
 
@@ -22,7 +24,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void _MakeSingleInstance()
+    void makeSingleInstance()
     {
         if(instance != null)
         {
@@ -32,6 +34,14 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }  
+    }
+    public void setBird(string bird)
+    {
+        PlayerPrefs.SetString(Bird, bird);
+    }
+    public string getBird()
+    {
+        return PlayerPrefs.GetString(Bird);
     }
     public void SetHighScore(int score)
     {

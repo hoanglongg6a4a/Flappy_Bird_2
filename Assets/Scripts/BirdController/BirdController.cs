@@ -1,4 +1,5 @@
 ﻿using Mono.Cecil;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ public class BirdController : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField]
     public AudioClip flyClip,pingClip,diedClip;
+    [SerializeField]
+    private GameObject redBird, yellowBird, blueBird;
 
 
     private bool isAlive;
@@ -28,10 +31,17 @@ public class BirdController : MonoBehaviour
     private float verticalVelocity = 0f;
 
     public bool hasScored;
+    //private Bird currentBird;
 
+    Bird IBird;
+    GameObject birtOjc;
+    string birdType = "";
+    //Component c = gameObject.GetComponent<Bird>() as Component;
     // Start is called before the first frame update
     void Awake()
     {
+        birdType =GameManager.instance.getBird();
+        ChooseBird();
         hasScored = false;
         isAlive = true;
         if (instance == null)
@@ -41,19 +51,39 @@ public class BirdController : MonoBehaviour
         spawner = GameObject.Find("Spawner Pipe");
         //velocity = Vector2.zero;
     }
+    public void ChooseBird()
+    {
+        switch (birdType)
+        {
+            case "Blue":
+                IBird = gameObject.AddComponent<BlueBird>();
+                birtOjc = IBird.ShowBird(blueBird);
+                break;
+            case "Yellow":
+                IBird = gameObject.AddComponent<YellowBird>();
+                birtOjc = IBird.ShowBird(yellowBird);
+                break;
+            // Xử lý các loại chim khác...
+            default:
+                // Loại chim không hợp lệ
+                Debug.LogError("Invalid bird type!");
+                break;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        _BirdMoveMent ();
+        birdMoveMent(birtOjc);
 
     }
     public void FlapButton()
     {
         didFlap = true;
     }
-    void _BirdMoveMent()
+    void birdMoveMent(GameObject birtOjc)
     {
-       Vector3 PrevioustPosition = transform.position;
+       Vector3 PrevioustPosition = birtOjc.transform.position;
         if (isAlive)
         {
             if (didFlap)
@@ -63,26 +93,13 @@ public class BirdController : MonoBehaviour
                 audioSource.PlayOneShot(flyClip);
             }
             verticalVelocity -= gravity * Time.deltaTime;
-            transform.position += Vector3.up * verticalVelocity * Time.deltaTime;
-            //transform.Translate(Vector3.up * verticalVelocity * Time.deltaTime);
-            // Hàm kiểm tra ground
-            //if (countScore())
-            //{
-            //    score += collisionCount;
-            //    collisionCount= 0;
-            //    if (GamePlayController.instance != null)
-            //    {
-            //        GamePlayController.instance._SetScore(score);
-            //    }
-            //    audioSource.PlayOneShot(pingClip);
-
-            //}
+            birtOjc.transform.position += Vector3.up * verticalVelocity * Time.deltaTime;
             // Check Va Chạm
-            if (CheckCollision())
+            if (CheckCollision(birtOjc))
             {
-                flag = 1;
+                //flag = 1;
                 isAlive = false;              
-                anim.SetTrigger("Died");
+                //anim.SetTrigger("Died");
                 audioSource.PlayOneShot(diedClip);
                 verticalVelocity = 0;
                 Time.timeScale = 0;
@@ -91,12 +108,12 @@ public class BirdController : MonoBehaviour
                 GamePlayController.instance._ShowMedal(score);
             }
             // kT Ground
-            if (transform.position.y <= -3.8f)
+            if (birtOjc.transform.position.y <= -3.8f)
             {
-                flag = 1;
+                //flag = 1;
                 isAlive = false;
-                transform.position = new Vector3(transform.position.x, -3.8f, transform.position.z);              
-                anim.SetTrigger("Died");
+                birtOjc.transform.position = new Vector3(birtOjc.transform.position.x, -3.8f, birtOjc.transform.position.z);              
+                //anim.SetTrigger("Died");
                 audioSource.PlayOneShot(diedClip);
                 verticalVelocity = 0; // Đặt lại tốc độ dọc thành 0 khi nằm yên trên sàn
                 Time.timeScale = 0;
@@ -104,41 +121,34 @@ public class BirdController : MonoBehaviour
                 GamePlayController.instance._BirdDiedShowPanel(score);
                 GamePlayController.instance._ShowMedal(score);
             }
-            Vector3 currentPosition = transform.position;
+            Vector3 currentPosition = birtOjc.transform.position;
             if (currentPosition.y > PrevioustPosition.y)
             {
                 //Debug.Log("Ví trí >0"+currentPosition);
                 float angel = 0;
                 angel = Mathf.Lerp(0, 90, currentPosition.y / 5);
-                transform.rotation = Quaternion.Euler(0, 0, angel);
+                birtOjc.transform.rotation = Quaternion.Euler(0, 0, angel);
             }
             else 
             {
                 //Debug.Log("Ví trí <0" + currentPosition);
                 float angel = 0;
                 angel = Mathf.Lerp(0, -90, -(currentPosition.y / 5));
-                transform.rotation = Quaternion.Euler(0, 0, angel);
+                birtOjc.transform.rotation = Quaternion.Euler(0, 0, angel);
             }
             GameObject[] pipes = GameObject.FindGameObjectsWithTag("PipeHolder");
-
-            foreach (GameObject pipe in pipes)
+            if (pipes.Length > 0)
             {
-
-                Transform pipeTransform = pipe.transform;
+                Transform pipeTransform = pipes[0].transform;
                 int childCount = pipeTransform.childCount;
-                if (childCount >= 2)
-                {
-                    Transform secondChildTransform = pipeTransform.GetChild(1);
-                    Renderer childRenderer = secondChildTransform.GetComponent<Renderer>();
-
-                    if (childRenderer != null)
-                    {
-                        float maxX = childRenderer.bounds.max.x;
-                        //Debug.Log(maxX + "MaxX cột");                      
+                Transform secondChildTransform = pipeTransform.GetChild(1);
+                Renderer childRenderer = secondChildTransform.GetComponent<Renderer>();
+                float maxX = childRenderer.bounds.max.x;
+                float minX = childRenderer.bounds.min.x;                                  
                         // Kiểm tra xem chim đã đi qua khoảng cách giữa hai ống hay chưa
-                        if ( maxX < transform.position.x && !hasScored)
+                        if (Mathf.Abs(maxX - birtOjc.transform.position.x) < 0.01f  && !hasScored)
                         {
-                            Debug.Log("Chim đã đi qua khoảng cách giữa hai ống");
+                           // Debug.Log("Chim đã đi qua khoảng cách giữa hai ống");
                             // Cập nhật điểm và các thao tác khác
                             score++;
                             hasScored = true;
@@ -146,67 +156,27 @@ public class BirdController : MonoBehaviour
                             {
                                 GamePlayController.instance._SetScore(score);
                             }
-                            audioSource.PlayOneShot(pingClip);
+                            audioSource.PlayOneShot(pingClip);                         
                         }
-                    }
-                }
-            }
-        }
-    }
-    void CheckPassThrough()
-    {
-        GameObject[] pipes = GameObject.FindGameObjectsWithTag("PipeHolder");
-
-        foreach (GameObject pipe in pipes)
-        {
-            Transform pipeTransform = pipe.transform;
-            int childCount = pipeTransform.childCount;
-            bool hasScored = false;
-            if (childCount >= 2)
-            {
-                Transform secondChildTransform = pipeTransform.GetChild(1);
-                Renderer childRenderer = secondChildTransform.GetComponent<Renderer>();
-
-                if (childRenderer != null)
-                {
-                    float maxX = childRenderer.bounds.max.x;
-                    Debug.Log(maxX + "MaxX cột");
-
-                    // Kiểm tra xem chim đã đi qua khoảng cách giữa hai ống hay chưa
-                    if ( transform.position.x > maxX && !hasScored)
-                    {
-                        Debug.Log("Chim đã đi qua khoảng cách giữa hai ống");
-                        // Cập nhật điểm và các thao tác khác
-                        score++;
-                        hasScored = true;
-                        if (GamePlayController.instance != null)
+                   
+                        if (birtOjc.transform.position.x > maxX)
                         {
-                            GamePlayController.instance._SetScore(score);
+                            hasScored = false;
                         }
-                        audioSource.PlayOneShot(pingClip);
-                    }
-                }
             }
         }
     }
-
     // Giá trị ngưỡng va chạm
-    bool CheckCollision()
+    bool CheckCollision(GameObject birtOjc)
     {
       
         GameObject[] pipes = GameObject.FindGameObjectsWithTag("Pipe");
         
         foreach (GameObject pipe in pipes)
         {
-            //Debug.Log("pipe"+":"+i);
-            //Vector2 birdSize = gameObject.GetComponent<SpriteRenderer>().bounds.size;
-            //Vector2 pipeSize = pipe.GetComponent<SpriteRenderer>().bounds.size;
-            Renderer birdRenderer = gameObject.GetComponent<Renderer>();
+         
+            Renderer birdRenderer = birtOjc.GetComponent<Renderer>();
             Renderer pipeRenderer = pipe.GetComponent<Renderer>();
-            // Lấy vị trí của bird và pipe
-            /*Vector3 birdPos = transform.position;
-            Vector3 pipePos = pipe.transform.position;*/
-
             // Tính các giá trị tọa độ của hộp giới hạn xung quanh bird và pipe
             float birdMinX = birdRenderer.bounds.min.x;
             float birdMaxX = birdRenderer.bounds.max.x;
@@ -217,7 +187,6 @@ public class BirdController : MonoBehaviour
             float pipeMaxX = pipeRenderer.bounds.max.x;
             float pipeMinY = pipeRenderer.bounds.min.y;
             float pipeMaxY = pipeRenderer.bounds.max.y;
-
             // Kiểm tra xem hai hộp giới hạn có giao nhau hay không
             if (birdMinX <= pipeMaxX && birdMaxX >= pipeMinX &&
                 birdMinY <= pipeMaxY && birdMaxY >= pipeMinY)
@@ -228,42 +197,5 @@ public class BirdController : MonoBehaviour
         }
         return false;
         // Chim không va chạm vào ống
-
     }
-   
-    void OnTriggerEnter2D(Collider2D target)
-    {
-        if (target.tag == "PipeHolder")
-        {
-            score++;
-            if (GamePlayController.instance != null)
-            {
-                GamePlayController.instance._SetScore(score);
-            }
-            audioSource.PlayOneShot(pingClip);
-        }
-    }
-    void OnCollisionEnter2D(Collision2D target)
-    {
-        if(target.gameObject.tag== "Pipe" || target.gameObject.tag == "Ground")
-        {
-            flag = 1;
-            if(isAlive)
-            {
-                isAlive = false;
-                Destroy(spawner);
-                audioSource.PlayOneShot(diedClip);
-                anim.SetTrigger("Died");
-            }
-            if (GamePlayController.instance != null)
-            {
-                GamePlayController.instance._BirdDiedShowPanel(score);
-                GamePlayController.instance._ShowMedal(score);
-            }
-            
-        }
-        
-    }
-
-
 }

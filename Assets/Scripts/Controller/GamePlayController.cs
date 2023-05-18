@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,6 +38,7 @@ public class GamePlayController : MonoBehaviour
     {
         scoreText.text = ""+score;
     }
+
     public void _BirdDiedShowPanel(int score)
     {
         gameOverPanel.SetActive(true);

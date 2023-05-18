@@ -30,8 +30,18 @@ public class PipeHolder : MonoBehaviour
         Vector3 temp = transform.position;
         temp.x -= speed * Time.deltaTime;
         transform.position = temp;
+        Renderer pipeRenderer = gameObject.GetComponent<Renderer>();
+        float maxX = pipeRenderer.bounds.max.x;
+        Vector3 screenMinPoint = new Vector3(0, 0, 0);
+        Vector3 worldMinPoint = Camera.main.ScreenToWorldPoint(screenMinPoint);
+        float minX = worldMinPoint.x;
+        if (maxX <= minX)
+        {
+            Destroy(gameObject);
+        }
 
     }
+
     void OnCollisionEnter2D(Collision2D target)
     {
         Vector3 temp = transform.position;
@@ -42,7 +52,7 @@ public class PipeHolder : MonoBehaviour
     {
         if (target.tag == "Destroy")
         {
-            BirdController.instance.hasScored = false;
+            //BirdController.instance.hasScored = false;
             Destroy(gameObject);
         }
     }

@@ -10,4 +10,14 @@ public class MainMenuController : MonoBehaviour
         //Application.LoadLevel("GamePlay");
         SceneManager.LoadScene("GamePlay");
     }
+    public void choseYellowBird()
+    {
+        SceneManager.LoadScene("GamePlay");
+        GameManager.instance.setBird("Yellow");
+    }
+    public void choseBlueBird()
+    {
+        SceneManager.LoadScene("GamePlay");
+        GameManager.instance.setBird("Blue");
+    }
 }

@@ -14,7 +14,7 @@ public class SpawnerPipe : MonoBehaviour
     }
     IEnumerator Spawner()
     {
-        yield return new WaitForSeconds (2f);
+        yield return new WaitForSeconds (1.5f);
         Vector3 temp = pipeHolder.transform.position;
         temp.y = Random.Range(-1.8f, 1.8f);
         Instantiate(pipeHolder, temp, Quaternion.identity);
