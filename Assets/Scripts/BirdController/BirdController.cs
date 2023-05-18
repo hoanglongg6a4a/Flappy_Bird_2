@@ -104,8 +104,9 @@ public class BirdController : MonoBehaviour
                 verticalVelocity = 0;
                 Time.timeScale = 0;
                 Destroy(spawner);
-                GamePlayController.instance._BirdDiedShowPanel(score);
-                GamePlayController.instance._ShowMedal(score);
+                GamePlayController.instance.ShowMedal(score);
+                GamePlayController.instance.BirdDiedShowPanel(score);
+                
             }
             // kT Ground
             if (birtOjc.transform.position.y <= -3.8f)
@@ -118,8 +119,9 @@ public class BirdController : MonoBehaviour
                 verticalVelocity = 0; // Đặt lại tốc độ dọc thành 0 khi nằm yên trên sàn
                 Time.timeScale = 0;
                 Destroy(spawner);
-                GamePlayController.instance._BirdDiedShowPanel(score);
-                GamePlayController.instance._ShowMedal(score);
+                GamePlayController.instance.ShowMedal(score);
+                GamePlayController.instance.BirdDiedShowPanel(score);
+                
             }
             Vector3 currentPosition = birtOjc.transform.position;
             if (currentPosition.y > PrevioustPosition.y)
@@ -164,6 +166,7 @@ public class BirdController : MonoBehaviour
                             hasScored = false;
                         }
             }
+        
         }
     }
     // Giá trị ngưỡng va chạm

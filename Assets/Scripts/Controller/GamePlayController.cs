@@ -39,7 +39,7 @@ public class GamePlayController : MonoBehaviour
         scoreText.text = ""+score;
     }
 
-    public void _BirdDiedShowPanel(int score)
+    public void BirdDiedShowPanel(int score)
     {
         gameOverPanel.SetActive(true);
         endScoreText.text = "" + score;
@@ -49,31 +49,25 @@ public class GamePlayController : MonoBehaviour
         }
         bestScoreText.text = "" + GameManager.instance.GetHighScore();
     }
-    public void _ShowMedal(int score)
+    public void ShowMedal(int score)
     {
- 
-
         if (score <= 5)
         {
             bronzeMedal.gameObject.SetActive(true);
             silverMedal.gameObject.SetActive(false);
-            bronzeMedal.gameObject.SetActive(false);
-
+            goldMedal.gameObject.SetActive(false);
         }
-        else if (score >= 5  && score <=10)
+        else if (score > 5 && score <= 10)
         {
             silverMedal.gameObject.SetActive(true);
             bronzeMedal.gameObject.SetActive(false);
             goldMedal.gameObject.SetActive(false);
-
-
         }
-        else if (int.Parse(bestScoreText.text) > 10)
+        else if (score > 10)
         {
             goldMedal.gameObject.SetActive(true);
             silverMedal.gameObject.SetActive(false);
             bronzeMedal.gameObject.SetActive(false);
-
         }
     }
     public void _MenuButton()

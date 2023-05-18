@@ -13,14 +13,10 @@ public class YellowBird : MonoBehaviour,Bird
         }
         public void skill()
         {
-        Debug.Log("Vang");
-            // Triển khai logic bay của RedBird
+       
         }
 
-        public void DisplayColor()
-        {
-            // Triển khai logic hiển thị màu sắc của RedBird
-        }
+  
     
 }
 public class BlueBird : MonoBehaviour, Bird
@@ -39,9 +35,6 @@ public class BlueBird : MonoBehaviour, Bird
         // Triển khai logic bay của RedBird
     }
 
-    public void DisplayColor()
-    {
-        // Triển khai logic hiển thị màu sắc của RedBird
-    }
+    
 
 }

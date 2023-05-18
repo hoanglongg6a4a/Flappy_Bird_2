@@ -7,6 +7,5 @@ using UnityEngine;
     {
         GameObject ShowBird(GameObject chim);
         void skill();
-        void DisplayColor();
 }
 
