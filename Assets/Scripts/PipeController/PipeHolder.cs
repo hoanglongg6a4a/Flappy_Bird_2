@@ -5,11 +5,29 @@ using UnityEngine;
 
 public class PipeHolder : MonoBehaviour
 {
-    public float speed;
+    private float speed  ;
+    public static PipeHolder instance;
     // Start is called before the first frame update
     void Start()
     {
-        
+        speed = 5;
+        _MakeInstance();
+    }
+    void _MakeInstance()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+    public void SetSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
+
+    public float GetSpeed()
+    {
+        return speed;
     }
 
     // Update is called once per frame
@@ -42,7 +60,7 @@ public class PipeHolder : MonoBehaviour
 
     }
 
-    void OnCollisionEnter2D(Collision2D target)
+   /* void OnCollisionEnter2D(Collision2D target)
     {
         Vector3 temp = transform.position;
         temp.x -= speed * Time.deltaTime;
@@ -55,5 +73,5 @@ public class PipeHolder : MonoBehaviour
             //BirdController.instance.hasScored = false;
             Destroy(gameObject);
         }
-    }
+    }*/
 }

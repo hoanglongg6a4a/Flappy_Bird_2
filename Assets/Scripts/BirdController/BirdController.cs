@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BirdController : MonoBehaviour
 {
@@ -18,18 +19,19 @@ public class BirdController : MonoBehaviour
     public AudioClip flyClip,pingClip,diedClip;
     [SerializeField]
     private GameObject redBird, yellowBird, blueBird;
-
+    public Text countDownText;
 
     private bool isAlive;
     private bool didFlap;
     private GameObject spawner;
     public float flag=0;
     public int score = 0;
- 
+   
+
     public float jumpForce = 5f;
     private float gravity = 10;
     private float verticalVelocity = 0f;
-
+    private bool canPressButton;
     public bool hasScored;
     //private Bird currentBird;
 
@@ -40,16 +42,17 @@ public class BirdController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        countDownText.text = "0";
         birdType =GameManager.instance.getBird();
         ChooseBird();
         hasScored = false;
         isAlive = true;
+        canPressButton = true;
         if (instance == null)
         {
             instance = this;
         }
         spawner = GameObject.Find("Spawner Pipe");
-        //velocity = Vector2.zero;
     }
     public void ChooseBird()
     {
@@ -151,7 +154,6 @@ public class BirdController : MonoBehaviour
                         if (Mathf.Abs(maxX - birtOjc.transform.position.x) < 0.01f  && !hasScored)
                         {
                            // Debug.Log("Chim đã đi qua khoảng cách giữa hai ống");
-                            // Cập nhật điểm và các thao tác khác
                             score++;
                             hasScored = true;
                             if (GamePlayController.instance != null)
@@ -166,7 +168,35 @@ public class BirdController : MonoBehaviour
                             hasScored = false;
                         }
             }
-        
+            if (Input.GetKeyDown(KeyCode.G) && canPressButton)
+            {
+                Debug.Log("Nhan G");
+                StartCoroutine(SkillCoroutine());
+            }
+            IEnumerator SkillCoroutine()
+            {
+                canPressButton = false; // Không cho phép bấm nút trong thời gian chờ
+                IBird.skill();
+                //yield return new WaitForSeconds(5f); // Chờ 5 giây
+                int countdownValue = 5;
+                while (countdownValue >= 0)
+                {
+
+                    countDownText.text = countdownValue.ToString();
+                    yield return new WaitForSeconds(1f); // Chờ 1 giây
+
+                    countdownValue--;
+                    if (countdownValue == 0)
+                    {
+                        countDownText.text = "Ready";
+                    }
+                }
+               
+                canPressButton = true; // Cho phép bấm nút sau khi đã chờ xong
+            }
+         
+
+
         }
     }
     // Giá trị ngưỡng va chạm
