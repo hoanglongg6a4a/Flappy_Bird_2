@@ -203,10 +203,8 @@ public class BirdController : MonoBehaviour
                     yield return new WaitForSeconds(1f); // Chờ 1 giây
                     countdownValue--;
                 }
-                if (countdownValue == 0)
-                {
-                    countDownText.text = "Ready";
-                }
+                countDownText.text = "Ready";
+
 
                 canPressButton = true; // Cho phép bấm nút sau khi đã chờ xong
             }

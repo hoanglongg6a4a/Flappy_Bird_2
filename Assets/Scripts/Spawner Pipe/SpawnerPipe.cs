@@ -18,7 +18,7 @@ public class SpawnerPipe : MonoBehaviour
         Vector3 worldMaxPoint = Camera.main.ScreenToWorldPoint(screenMaxPoint);
         float maxX = worldMaxPoint.x;
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
         GameObject[] pipes = GameObject.FindGameObjectsWithTag("PipeHolder");
         if (pipes.Length < 2)
         {
