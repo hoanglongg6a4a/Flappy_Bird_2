@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         makeSingleInstance();
-        IsGameStartedForTheFirstTime();
+        //IsGameStartedForTheFirstTime();
+        PlayerPrefs.SetInt(HIGH_SCORE, 0);
     }
 
     void IsGameStartedForTheFirstTime()

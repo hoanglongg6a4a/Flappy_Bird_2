@@ -5,7 +5,7 @@ using UnityEngine;
 
     public interface Bird
     {
-        GameObject ShowBird(GameObject chim);
-        void skill();
+        GameObject ShowBird(GameObject Bird);
+        void Skill();
 }
 

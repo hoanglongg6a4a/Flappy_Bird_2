@@ -5,10 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-    public void _PlayButoon()
+    public void choseRedBird()
     {
         //Application.LoadLevel("GamePlay");
         SceneManager.LoadScene("GamePlay");
+        GameManager.instance.setBird("Red");
     }
     public void choseYellowBird()
     {
