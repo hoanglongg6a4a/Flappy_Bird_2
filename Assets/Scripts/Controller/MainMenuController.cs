@@ -7,18 +7,18 @@ public class MainMenuController : MonoBehaviour
 {
     public void choseRedBird()
     {
-        //Application.LoadLevel("GamePlay");
+        
         SceneManager.LoadScene("GamePlay");
-        GameManager.instance.setBird("Red");
+        PlayerPrefs.SetString("BirdType", BirdType.Red.ToString()); ;
     }
     public void choseYellowBird()
     {
         SceneManager.LoadScene("GamePlay");
-        GameManager.instance.setBird("Yellow");
+        PlayerPrefs.SetString("BirdType", BirdType.Yellow.ToString());
     }
     public void choseBlueBird()
     {
         SceneManager.LoadScene("GamePlay");
-        GameManager.instance.setBird("Blue");
+        PlayerPrefs.SetString("BirdType", BirdType.Blue.ToString());
     }
 }

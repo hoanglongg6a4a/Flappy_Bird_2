@@ -19,22 +19,21 @@ public class GamePlayController : MonoBehaviour
     void Awake()
     {
         Time.timeScale = 0;
-        _MakeInstance();
+        MakeInstance();
     }
-    void _MakeInstance()
+    void MakeInstance()
     {
         if (instance == null)
         {
             instance = this;
         }
-
     }
     public void InstructionButton()
     {
         Time.timeScale = 1;
         instuctionButton.gameObject.SetActive(false);
     }
-    public void _SetScore(int score)
+    public void SetScore(int score)
     {
         scoreText.text = ""+score;
     }

@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class PipeHolder : MonoBehaviour
 {
-    private float speed  ;
+    public float speed  ;
     public static PipeHolder instance;
+    //public List<GameObject> poolPipe;
     // Start is called before the first frame update
     void Start()
     {
         speed = 5;
         _MakeInstance();
+
     }
     void _MakeInstance()
     {
@@ -24,26 +26,16 @@ public class PipeHolder : MonoBehaviour
     {
         speed = newSpeed;
     }
-
     public float GetSpeed()
     {
         return speed;
     }
-
     // Update is called once per frame
     void Update()
     {
-        if(BirdController.instance != null)
-        {
-           if (BirdController.instance.flag ==1)
-            {
-                Destroy(GetComponent<PipeHolder>());
-            }
-        }
-      
-        _PipeMovement();  
+        PipeMovement();  
     } 
-    void _PipeMovement()
+    void PipeMovement()
     {
         Vector3 temp = transform.position;
         temp.x -= speed * Time.deltaTime;
@@ -53,25 +45,11 @@ public class PipeHolder : MonoBehaviour
         Vector3 screenMinPoint = new Vector3(0, 0, 0);
         Vector3 worldMinPoint = Camera.main.ScreenToWorldPoint(screenMinPoint);
         float minX = worldMinPoint.x;
-        if (maxX <= minX)
+        if (maxX < minX-0.5f)
         {
-            Destroy(gameObject);
+            BirdController.instance.hasScored = false;
+            gameObject.SetActive(false);
+            SpawnerPipe.instance.poolPipe.Add(gameObject);
         }
-
     }
-
-   /* void OnCollisionEnter2D(Collision2D target)
-    {
-        Vector3 temp = transform.position;
-        temp.x -= speed * Time.deltaTime;
-        transform.position = temp;
-    }
-    void OnTriggerEnter2D(Collider2D target)
-    {
-        if (target.tag == "Destroy")
-        {
-            //BirdController.instance.hasScored = false;
-            Destroy(gameObject);
-        }
-    }*/
 }

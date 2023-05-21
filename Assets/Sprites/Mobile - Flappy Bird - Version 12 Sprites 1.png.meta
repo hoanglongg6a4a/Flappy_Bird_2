@@ -108,7 +108,7 @@ TextureImporter:
       name: Mobile - Flappy Bird - Version 12 Sprites_0
       rect:
         serializedVersion: 2
-        x: 4
+        x: 0
         y: 256
         width: 144
         height: 256
@@ -1074,9 +1074,9 @@ TextureImporter:
       name: Panel
       rect:
         serializedVersion: 2
-        x: 1
+        x: 2
         y: 196
-        width: 113
+        width: 114
         height: 57
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -1814,7 +1814,7 @@ TextureImporter:
         width: 57
         height: 51
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1837,7 +1837,6 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Panel: -922155788
       Screen_pipe_1: 623744832
       Mobile - Flappy Bird - Version 12 Sprites_17: 211597576
       Mobile - Flappy Bird - Version 12 Sprites_13: 221888961
@@ -1863,25 +1862,25 @@ TextureImporter:
       Mobile - Flappy Bird - Version 12 Sprites_40: 473380412
       Mobile - Flappy Bird - Version 12 Sprites_27: -150436001
       Mobile - Flappy Bird - Version 12 Sprites_66: 1141826421
+      Mobile - Flappy Bird - Version 12 Sprites_78: 1611208435
       Mobile - Flappy Bird - Version 12 Sprites_80: -252094598
-      Mobile - Flappy Bird - Version 12 Sprites_75: -44719133
       Mobile - Flappy Bird - Version 12 Sprites_61: -2010739672
-      Mobile - Flappy Bird - Version 12 Sprites_1: -776510709
+      Flappy_Bird_Blue_1: 1635194960
       Mobile - Flappy Bird - Version 12 Sprites_19: -330056898
-      Mobile - Flappy Bird - Version 12 Sprites_32: -967462956
+      Screen_pipe_2: 1797284689
       Mobile - Flappy Bird - Version 12 Sprites_60: 155777466
       Mobile - Flappy Bird - Version 12 Sprites_52: -798305741
       Mobile - Flappy Bird - Version 12 Sprites_10: -14568643
       Mobile - Flappy Bird - Version 12 Sprites_12: -78996976
       Mobile - Flappy Bird - Version 12 Sprites_26: -788951592
-      Screen_pipe_2: 1797284689
+      Mobile - Flappy Bird - Version 12 Sprites_32: -967462956
       Mobile - Flappy Bird - Version 12 Sprites_41: 1346615514
-      Mobile - Flappy Bird - Version 12 Sprites_78: 1611208435
+      Mobile - Flappy Bird - Version 12 Sprites_1: -776510709
       Gold Medal: 775332897
       Flappy_Bird_Die: -506014303
-      Flappy_Bird_Blue_1: 1635194960
       Mobile - Flappy Bird - Version 12 Sprites_34: 1027642261
       Mobile - Flappy Bird - Version 12 Sprites_44: -1223075604
+      Mobile - Flappy Bird - Version 12 Sprites_75: -44719133
       Flappy_Bird_Blue_2: -411433426
       Play_Button: -938458063
       Instruction Button: -1477035378
@@ -1904,21 +1903,22 @@ TextureImporter:
       Mobile - Flappy Bird - Version 12 Sprites_56: -616776446
       Mobile - Flappy Bird - Version 12 Sprites_59: -1876893158
       Mobile - Flappy Bird - Version 12 Sprites_74: 852698852
+      Panel: -922155788
       Mobile - Flappy Bird - Version 12 Sprites_35: 829743794
-      Bronze Medal: -1609742951
       Mobile - Flappy Bird - Version 12 Sprites_7: -399163813
-      Mobile - Flappy Bird - Version 12 Sprites_43: -328419137
+      Bronze Medal: -1609742951
       Button_Ok: -559935536
+      Mobile - Flappy Bird - Version 12 Sprites_43: -328419137
       Mobile - Flappy Bird - Version 12 Sprites_15: -375798782
-      Mobile - Flappy Bird - Version 12 Sprites_76: -1140917792
       Mobile - Flappy Bird - Version 12 Sprites_9: -911797321
       Mobile - Flappy Bird - Version 12 Sprites_45: 1647071506
       Ground: 308550068
-      Flappy_Bird_Blue_3: -1448399251
+      Mobile - Flappy Bird - Version 12 Sprites_76: -1140917792
       Mobile - Flappy Bird - Version 12 Sprites_0: -1068327895
       Mobile - Flappy Bird - Version 12 Sprites_5: 1571137181
-      Mobile - Flappy Bird - Version 12 Sprites_24: -360200921
+      Flappy_Bird_Blue_3: -1448399251
       Mobile - Flappy Bird - Version 12 Sprites_29: -630158294
+      Mobile - Flappy Bird - Version 12 Sprites_24: -360200921
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
