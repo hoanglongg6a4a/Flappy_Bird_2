@@ -377,7 +377,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -31.539997, y: -70.284996}
-  m_SizeDelta: {x: 30.48, y: 32.86}
+  m_SizeDelta: {x: 30, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &188312799
 MonoBehaviour:
@@ -592,7 +592,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 358.79, y: 322.22}
+  m_SizeDelta: {x: 358, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &359140414
 MonoBehaviour:
@@ -1446,11 +1446,9 @@ MonoBehaviour:
   blueBird: {fileID: 8499230467263317888, guid: f3711b6669da6be4587cd7128c32a753, type: 3}
   countDownText: {fileID: 401477076}
   bullet: {fileID: 4895441123548232939, guid: ee9d5a7bc7c82a441b4cf16a0e96e3b8, type: 3}
-  ImageCooldown: {fileID: 1076990231}
-  flag: 0
-  score: 0
   jumpForce: 5
   hasScored: 0
+  score: 0
   birdOjc: {fileID: 0}
   birdType: 0
 --- !u!4 &1064330327
@@ -1722,8 +1720,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000038147, y: 96.4}
-  m_SizeDelta: {x: 84.43, y: 59.175}
+  m_AnchoredPosition: {x: 0, y: 90}
+  m_SizeDelta: {x: 80, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1259795607
 MonoBehaviour:
@@ -2008,7 +2006,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 26.3, y: -69.855}
+  m_AnchoredPosition: {x: 26.3, y: -70}
   m_SizeDelta: {x: 30, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1515954855

@@ -315,7 +315,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2128825027}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: choseYellowBird
+        m_MethodName: ChoseYellowBird
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -803,7 +803,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2128825027}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: choseBlueBird
+        m_MethodName: ChoseBlueBird
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1004,7 +1004,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2128825027}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: choseRedBird
+        m_MethodName: ChoseRedBird
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

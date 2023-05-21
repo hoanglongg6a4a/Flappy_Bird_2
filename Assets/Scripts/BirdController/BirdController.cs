@@ -6,15 +6,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public enum BirdType
 {
     Yellow,
     Red,
     Blue
-
 }
-
 public class BirdController : MonoBehaviour
 {
     public static BirdController instance;

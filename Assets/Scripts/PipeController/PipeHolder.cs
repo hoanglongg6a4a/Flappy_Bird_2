@@ -12,10 +12,10 @@ public class PipeHolder : MonoBehaviour
     void Start()
     {
         speed = 5;
-        _MakeInstance();
+        MakeInstance();
 
     }
-    void _MakeInstance()
+    void MakeInstance()
     {
         if (instance == null)
         {
