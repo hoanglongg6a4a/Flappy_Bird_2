@@ -12,6 +12,8 @@ public class RedBird : MonoBehaviour, Bird
     }
     public void Skill()
     {
-        Instantiate(BirdController.instance.bullet, BirdController.instance.birdOjc.transform.position, Quaternion.identity);
+        GameObject bullet = SpawnBullet.instance.GetBullet();
+        bullet.transform.position = BirdController.instance.birdOjc.transform.position;
+        bullet.SetActive(true);
     }
 }

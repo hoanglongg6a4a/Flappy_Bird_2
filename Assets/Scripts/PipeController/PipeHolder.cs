@@ -49,7 +49,7 @@ public class PipeHolder : MonoBehaviour
         {
             BirdController.instance.hasScored = false;
             gameObject.SetActive(false);
-            SpawnerPipe.instance.poolPipe.Add(gameObject);
+            //SpawnerPipe.instance.poolPipe.Add(gameObject);
         }
     }
 }

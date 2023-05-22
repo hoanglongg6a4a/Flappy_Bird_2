@@ -5,19 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
+    string scene = "GamePlay";
+
+    public void ChooseBird(BirdType birdType)
+    {
+        SceneManager.LoadScene(scene);
+        PlayerPrefs.SetString("BirdType", birdType.ToString());
+    }
     public void ChoseRedBird()
-    {  
-        SceneManager.LoadScene("GamePlay");
-        PlayerPrefs.SetString("BirdType", BirdType.Red.ToString()); ;
+    {
+        ChooseBird(BirdType.Red);
     }
     public void ChoseYellowBird()
     {
-        SceneManager.LoadScene("GamePlay");
-        PlayerPrefs.SetString("BirdType", BirdType.Yellow.ToString());
+        ChooseBird(BirdType.Yellow);
     }
     public void ChoseBlueBird()
     {
-        SceneManager.LoadScene("GamePlay");
-        PlayerPrefs.SetString("BirdType", BirdType.Blue.ToString());
+        ChooseBird(BirdType.Blue);
     }
 }

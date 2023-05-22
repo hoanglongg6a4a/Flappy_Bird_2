@@ -16,8 +16,8 @@ public class YellowBird : MonoBehaviour,Bird
         }
         private IEnumerator SkillCoroutine()
         {
-            PipeHolder.instance.SetSpeed(15f); // Thực hiện hàm setSpeed với tham số là 1f
-            yield return new WaitForSeconds(0.5f); // Đợi 1 giây                                                 // Thay đổi thông số khác sau 1 giây
+            PipeHolder.instance.SetSpeed(15f);
+            yield return new WaitForSeconds(0.5f);                                            
             PipeHolder.instance.SetSpeed(5f);
         }
  }

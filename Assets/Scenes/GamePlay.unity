@@ -425,7 +425,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1626436138}
         m_TargetAssemblyTypeName: GamePlayController, Assembly-CSharp
-        m_MethodName: _MenuButton
+        m_MethodName: MenuButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1321,6 +1321,7 @@ GameObject:
   - component: {fileID: 1064330327}
   - component: {fileID: 1064330325}
   - component: {fileID: 1064330324}
+  - component: {fileID: 1064330328}
   m_Layer: 0
   m_Name: Chose Bird
   m_TagString: Untagged
@@ -1466,6 +1467,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1064330328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064330323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8484043457406f24094de4b931f09a22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 4895441123548232939, guid: ee9d5a7bc7c82a441b4cf16a0e96e3b8, type: 3}
+  poolSize: 10
+  bulletPool: []
 --- !u!1 &1076990228
 GameObject:
   m_ObjectHideFlags: 0
@@ -2055,7 +2071,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1626436138}
         m_TargetAssemblyTypeName: GamePlayController, Assembly-CSharp
-        m_MethodName: _RestartGameButton
+        m_MethodName: RestartGameButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -15,7 +15,7 @@ public class GamePlayController : MonoBehaviour
     private GameObject gameOverPanel;
     [SerializeField]
     private Image goldMedal, silverMedal, bronzeMedal;
-
+    private GameObject[] medals;
     void Awake()
     {
         Time.timeScale = 0;
@@ -50,33 +50,31 @@ public class GamePlayController : MonoBehaviour
     }
     public void ShowMedal(int score)
     {
+        medals = new GameObject[] { bronzeMedal.gameObject, silverMedal.gameObject, goldMedal.gameObject };
+        foreach (GameObject medal in medals)
+        {
+            medal.gameObject.SetActive(false);
+        }
+
         if (score <= 5)
         {
-            bronzeMedal.gameObject.SetActive(true);
-            silverMedal.gameObject.SetActive(false);
-            goldMedal.gameObject.SetActive(false);
+            medals[0].gameObject.SetActive(true); 
         }
         else if (score > 5 && score <= 10)
         {
-            silverMedal.gameObject.SetActive(true);
-            bronzeMedal.gameObject.SetActive(false);
-            goldMedal.gameObject.SetActive(false);
+            medals[1].gameObject.SetActive(true); 
         }
         else if (score > 10)
         {
-            goldMedal.gameObject.SetActive(true);
-            silverMedal.gameObject.SetActive(false);
-            bronzeMedal.gameObject.SetActive(false);
+            medals[2].gameObject.SetActive(true); 
         }
     }
-    public void _MenuButton()
+    public void MenuButton()
     {
-       // Application.LoadLevel("MainMenu");
         SceneManager.LoadScene("GameMenu");
     }
-    public void _RestartGameButton()
+    public void RestartGameButton()
     {
-        //  Application.LoadLevel("GamePlay");
         SceneManager.LoadScene("GamePlay");
     }
 }

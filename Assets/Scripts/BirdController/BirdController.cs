@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.Pipes;
 using UnityEngine;
 using UnityEngine.UI;
 public enum BirdType
@@ -15,7 +16,6 @@ public enum BirdType
 public class BirdController : MonoBehaviour
 {
     public static BirdController instance;
-   
     [SerializeField]
     private Animator anim;
     [SerializeField]
@@ -26,7 +26,9 @@ public class BirdController : MonoBehaviour
     private GameObject redBird, yellowBird, blueBird;
     public Text countDownText;
     public GameObject bullet;
-    GameObject[] pipes;
+    public GameObject birdOjc;
+    private GameObject[] pipes;
+    private GameObject[] pipeHolders;
     private bool isAlive;
     private bool didFlap;
     public float jumpForce = 5f;
@@ -35,14 +37,12 @@ public class BirdController : MonoBehaviour
     private bool canPressButton;
     public bool hasScored;
     public int score ;
-    Bird IBird;
-    public GameObject birdOjc;
+    private Bird IBird;
     public BirdType birdType;
-    private bool Cooldown;
-
+    private string KindBird="BirdType";
     void Awake()
     {
-        string birdTypeString = PlayerPrefs.GetString("BirdType");
+        string birdTypeString = PlayerPrefs.GetString(KindBird);
         birdType = (BirdType)Enum.Parse(typeof(BirdType), birdTypeString);
         countDownText.text = "Go";
         score = 0;
@@ -82,7 +82,6 @@ public class BirdController : MonoBehaviour
     void Update()
     {
         birdMoveMent();
-
     }
     public void FlapButton()
     {
@@ -117,25 +116,26 @@ public class BirdController : MonoBehaviour
             }
             else
             {
-                pipes = GameObject.FindGameObjectsWithTag("PipeHolder");
+                pipeHolders = GameObject.FindGameObjectsWithTag("PipeHolder");
                 if (pipes.Length > 0)
                 {
-                    Transform pipeTransform = pipes[0].transform;
-                    Renderer pipeRenderer = pipeTransform.GetComponent<Renderer>();
-                    float maxX = pipeRenderer.bounds.max.x;
-                    float minX = pipeRenderer.bounds.max.y;
-                    Renderer birdRenderer = birdOjc.GetComponent<Renderer>();
-                    float BirdmaxX = birdRenderer.bounds.max.x;
-                    float BirdminX = birdRenderer.bounds.max.x;
-                    // Kiểm tra xem chim đã đi qua khoảng cách giữa hai ống hay chưa
-                    if (Mathf.Abs(maxX - birdOjc.transform.position.x) < 0.01f && !hasScored)
+                    foreach (GameObject pipeHolder in pipeHolders)
                     {
-                        hasScored = true;
-                        IncreaseScore();
-                    }
-                    if (birdOjc.transform.position.x > maxX && hasScored)
-                    {
-                        hasScored = false;
+                        Transform pipeTransform = pipeHolder.transform;
+                        Renderer pipeRenderer = pipeTransform.GetComponent<Renderer>();
+                        float maxX = pipeRenderer.bounds.max.x;
+                        Renderer birdRenderer = birdOjc.GetComponent<Renderer>();
+                        float BirdmaxX = birdRenderer.bounds.max.x;
+                        // Kiểm tra xem chim đã đi qua khoảng cách giữa hai ống hay chưa
+                        if (Mathf.Abs(maxX - BirdmaxX) < 0.02f && !hasScored)
+                        {
+                            hasScored = true;
+                            IncreaseScore();
+                        }                   
+                        if (BirdmaxX > maxX && hasScored)
+                        {
+                            hasScored = false;
+                        }
                     }
                 }
             }              
@@ -152,22 +152,19 @@ public class BirdController : MonoBehaviour
             }
         }
     }
-    // Giá trị ngưỡng va chạm
     bool CheckCollision(GameObject birtOjc)
     {
         pipes = GameObject.FindGameObjectsWithTag("Pipe");
-        // Check Ground
         if (birtOjc.transform.position.y <= -4f)
         {
             isAlive = false;
             birtOjc.transform.position = new Vector3(birtOjc.transform.position.x, -4f, birtOjc.transform.position.z);
             audioSource.PlayOneShot(diedClip);
-            verticalVelocity = 0; // Đặt lại tốc độ dọc thành 0 khi nằm yên trên sàn
+            verticalVelocity = 0; 
             Time.timeScale = 0;
             GamePlayController.instance.ShowMedal(score);
             GamePlayController.instance.BirdDiedShowPanel(score);
         }
-        // Check Var
         if (pipes.Length > 0)
         {
             float currentSpeed = PipeHolder.instance.GetSpeed();
@@ -175,19 +172,12 @@ public class BirdController : MonoBehaviour
             {
                 Renderer birdRenderer = birtOjc.GetComponent<Renderer>();
                 Renderer pipeRenderer = pipe.GetComponent<Renderer>();
-                float birdMinX = birdRenderer.bounds.min.x;
-                float birdMaxX = birdRenderer.bounds.max.x;
-                float birdMinY = birdRenderer.bounds.min.y;
-                float birdMaxY = birdRenderer.bounds.max.y;
-                float pipeMinX = pipeRenderer.bounds.min.x;
-                float pipeMaxX = pipeRenderer.bounds.max.x;
-                float pipeMinY = pipeRenderer.bounds.min.y;
-                float pipeMaxY = pipeRenderer.bounds.max.y;
+                Bounds birdBounds = birdRenderer.bounds;
+                Bounds pipeBounds = pipeRenderer.bounds;
+
                 if (currentSpeed <= 5)
                 {
-                    // Kiểm tra xem hai hộp giới hạn có giao nhau hay không
-                    if (birdMinX <= pipeMaxX && birdMaxX >= pipeMinX &&
-                        birdMinY <= pipeMaxY && birdMaxY >= pipeMinY)
+                    if(birdBounds.Intersects(pipeBounds))
                     {
                         return true;
                     }
@@ -195,7 +185,6 @@ public class BirdController : MonoBehaviour
             }
         } 
         return false;
-        // Chim không va chạm vào ống
     }
     public void IncreaseScore()
     {
@@ -213,17 +202,16 @@ public class BirdController : MonoBehaviour
     }
     IEnumerator SkillCoolDown()
     {
-        canPressButton = false; // Không cho phép bấm nút trong thời gian chờ
+        canPressButton = false;
         IBird.Skill();
-        //yield return new WaitForSeconds(5f); // Chờ 5 giây
         int countdownValue = 5;
         while (countdownValue >= 0)
         {
             countDownText.text = countdownValue.ToString();
-            yield return new WaitForSeconds(1f); // Chờ 1 giây
             countdownValue--;
+            yield return new WaitForSeconds(1f); 
         }
         countDownText.text = "Go";
-        canPressButton = true; // Cho phép bấm nút sau khi đã chờ xong
+        canPressButton = true; 
     }
 }
